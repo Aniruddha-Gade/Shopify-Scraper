@@ -45,6 +45,22 @@ const XMLProducts = () => {
         }
     };
 
+
+    // Loading Skeleton for Product-Card
+    const LoadingProductCardSkeleton = () => (
+        <div className="flex flex-col h-[390px] justify-between bg-gray-700 p-4 rounded-2xl ">
+            <div className="w-full h-[170px] rounded-2xl skeleton"></div>
+
+            <div className="py-4 w-full flex flex-col gap-3">
+                <div className="h-5 w-full rounded-2xl skeleton"></div>
+                <div className="h-5 w-1/2 rounded-2xl skeleton"></div>
+                <div className="h-5 w-1/4 rounded-2xl skeleton"></div>
+            </div>
+        </div>
+    )
+
+
+
     return (
         <div className="w-full flex-center flex-col gap-10">
             <h1 className="text-5xl text-center font-bold text-orange-400 underline">
@@ -72,7 +88,13 @@ const XMLProducts = () => {
             <div className="w-full flex-center flex-col">
                 {/* if there is API call */}
                 {loading ? (
-                    <div className="text-5xl text-red-500">Loading</div>
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                        <LoadingProductCardSkeleton />
+                        <LoadingProductCardSkeleton />
+                        <LoadingProductCardSkeleton />
+                        <LoadingProductCardSkeleton />
+                        <LoadingProductCardSkeleton />
+                    </div>
                 ) :
                     // if NO data found
                     products.length === 0 ? (
