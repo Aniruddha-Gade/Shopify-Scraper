@@ -73,7 +73,7 @@ const XMLProducts = () => {
                     value={sitemapUrl}
                     onChange={(e) => setSitemapUrl(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    className="p-2 m-4 h-14 w-1/2 border text-black border-gray-300 rounded"
+                    className="p-2 m-4 h-14 w-1/2 border text-black border-gray-300 rounded-xl focus:outline-none  "
                     placeholder="Enter product sitemap XML URL"
                 />
                 <button

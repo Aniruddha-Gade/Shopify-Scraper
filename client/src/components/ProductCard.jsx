@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
             <Img
                 src={product?.image}
                 alt={product?.title}
-                className="w-full rounded-2xl"
+                className="w-full h-[270px] object-cover rounded-2xl"
             />
 
             <div className="py-4">
