@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require('express');
+const productRouter = require('./routes/products');
+const cors = require('cors');
 require('dotenv').config()
 
 
@@ -20,6 +22,20 @@ app.listen(PORT, () => {
     console.log(`Server Started on PORT ${PORT}`);
 });
 
+
+// add middlewares
+app.use(express.json());
+app.use(
+    cors({
+        // origin: 'http://localhost:5173', // frontend link
+        origin: "*",
+        credentials: true
+    })
+);
+
+
+// mount routes
+app.use("/api/v1/products", productRouter)
 
 
 // Default Route
