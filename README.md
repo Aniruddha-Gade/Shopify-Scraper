@@ -51,6 +51,9 @@ Backend deployed on Render 📬 : [  https://shopify-scraper-hu9x.onrender.com/ 
 
 
 ## Features: 🚀
+- Lazy Load Image
+- Hit Enter after filling input
+- Get summary of page from AI in 3-4 Bullets points 
 
 
 
