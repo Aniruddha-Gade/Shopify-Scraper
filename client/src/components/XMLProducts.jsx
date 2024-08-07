@@ -23,11 +23,12 @@ const XMLProducts = () => {
     const fetchProducts = async (url) => {
         setLoading(true);
         setProducts([])
+        console.log("url = ", url)
         try {
             // console.log("Calling backend to fetch products");
             if (url) {
-                // const response = await axios.post(READ_XML_URL_API, { sitemapUrl });
-                const response = await axios.post(READ_AND_SUMMARIZE_URL_API, { sitemapUrl });
+                // const response = await axios.post(READ_XML_URL_API, { sitemapUrl: url });
+                const response = await axios.post(READ_AND_SUMMARIZE_URL_API, { sitemapUrl: url });
 
                 console.log("READ_XML_URL_API Response => ", response.data);
                 // store data in state
@@ -46,7 +47,7 @@ const XMLProducts = () => {
     // if 'Enter' button clicked, then fetch products
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            fetchProducts();
+            fetchProducts(sitemapUrl);
         }
     };
 
@@ -86,16 +87,17 @@ const XMLProducts = () => {
 
     // handle Example Click
     const handleExampleClick = (url) => {
+        console.log("handleExampleClick url = ,url")
         setSitemapUrl(url);
+        fetchProducts(url);
     };
 
     // useEffect to fetch products when sitemapUrl changes
-    useEffect(() => {
-        if (sitemapUrl) {
-            // setProducts([])
-            fetchProducts(sitemapUrl);
-        }
-    }, [sitemapUrl]);
+    // useEffect(() => {
+    //     if (sitemapUrl) {
+    //         fetchProducts(sitemapUrl);
+    //     }
+    // }, [sitemapUrl]);
 
 
     return (
