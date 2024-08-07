@@ -1,5 +1,6 @@
 const axios = require("axios")
 const xml2js = require('xml2js');
+// const cheerio =require('cheerio')
 require('dotenv').config()
 
 
@@ -9,6 +10,9 @@ require('dotenv').config()
 exports.readXMLUrl = async (req, res) => {
     // get sitemap XML URL
     const { sitemapUrl } = req.body;
+    if (!sitemapUrl) {
+        return res.status(400).json({ success: false, message: 'sitemapUrl is required' });
+    }
 
     try {
         // Fetch the sitemap XML data from the specified URL
@@ -63,34 +67,34 @@ async function fetchPageContent(url) {
 
 
 // Function to summarize content
-const fetchAndSummarizeProduct = async (url) => {
-    try {
-        console.log("url = ", url)
-        const pageResponse = await axios.get(url);
-        const $ = cheerio.load(pageResponse.data);
-        const text = $('body').text().replace(/\s+/g, ' ').trim();
-        console.log("text = ", text)
+// const fetchAndSummarizeProduct = async (url) => {
+//     try {
+//         console.log("url = ", url)
+//         const pageResponse = await axios.get(url);
+//         const $ = cheerio.load(pageResponse.data);
+//         const text = $('body').text().replace(/\s+/g, ' ').trim();
+//         console.log("text = ", text)
 
 
-        const summaryResponse = await axios.post(`${GRAQ_API_URL}/completions`, {
-            model: 'llama-3.1-70b-versatile',
-            prompt: `Summarize the following content in 3-4 bullet points:\n\n${text}`,
-            max_tokens: 150,
-        }, {
-            headers: {
-                'Authorization': `Bearer ${GRAQ_API_KEY}`,
-                'Content-Type': 'application/json'
-            }
-        });
+//         const summaryResponse = await axios.post(`${GRAQ_API_URL}/completions`, {
+//             model: 'llama-3.1-70b-versatile',
+//             prompt: `Summarize the following content in 3-4 bullet points:\n\n${text}`,
+//             max_tokens: 150,
+//         }, {
+//             headers: {
+//                 'Authorization': `Bearer ${GRAQ_API_KEY}`,
+//                 'Content-Type': 'application/json'
+//             }
+//         });
 
-        console.log("summaryResponse = ", summaryResponse)
+//         console.log("summaryResponse = ", summaryResponse)
 
-        return summaryResponse.data.choices[0].text.trim();
-    } catch (error) {
-        console.error('Error fetching or summarizing product page', error);
-        return 'Error summarizing content';
-    }
-};
+//         return summaryResponse.data.choices[0].text.trim();
+//     } catch (error) {
+//         console.error('Error fetching or summarizing product page', error);
+//         return 'Error summarizing content';
+//     }
+// };
 
 
 
@@ -107,7 +111,7 @@ async function summarizeContent(content) {
         }
     });
 
-    console.log("response = ", response.data)
+    // console.log("response = ", response.data)
 
     return response.data.choices[0].text.trim();
 }
@@ -116,6 +120,9 @@ async function summarizeContent(content) {
 exports.readAndSummarizeUrl = async (req, res) => {
     // get sitemap XML URL
     const { sitemapUrl } = req.body;
+    if (!sitemapUrl) {
+        return res.status(400).json({ success: false, message: 'sitemapUrl is required' });
+    }
 
     try {
         // Fetch the sitemap XML data from the specified URL
@@ -129,7 +136,7 @@ exports.readAndSummarizeUrl = async (req, res) => {
             }
 
             // Filter the URLs that contain images and map the required fields
-            const productLinks = result.urlset.url
+            const products = result.urlset.url
                 .filter(url => url['image:image'] && url['image:image'][0])
                 .map(url => ({
                     loc: url.loc[0],
@@ -137,10 +144,10 @@ exports.readAndSummarizeUrl = async (req, res) => {
                     title: url['image:image'][0]['image:title'][0]
                 })).slice(0, 5);
 
-            console.log("productLinks = ", productLinks)
+            // console.log("productLinks = ", productLinks)
 
             // Summarize the content for each product link
-            const summarizedProducts = await Promise.all(productLinks.map(async (product) => {
+            const summarizedProducts = await Promise.all(products.map(async (product) => {
                 try {
                     const pageContent = await fetchPageContent(product.loc);
                     const summary = await summarizeContent(pageContent);
@@ -149,7 +156,7 @@ exports.readAndSummarizeUrl = async (req, res) => {
                         summary
                     };
                 } catch (error) {
-                    console.error(`Error summarizing content for URL ${product.loc}:`, error);
+                    // console.error(`Error summarizing content for URL ${product.loc}:`, error);
                     return {
                         ...product,
                         summary: 'Error summarizing content'
@@ -163,6 +170,7 @@ exports.readAndSummarizeUrl = async (req, res) => {
             res.json({
                 success: true,
                 products: summarizedProducts,
+                // products,
                 message: "Successfully retrieved product with summary"
             });
         });
