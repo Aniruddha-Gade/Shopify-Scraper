@@ -23,7 +23,7 @@ exports.readXMLUrl = async (req, res) => {
             }
             else {
                 // Filter the URLs that contain images and map the required fields
-                const productLinks = result.urlset.url
+                const products = result.urlset.url
                     .filter(url => url['image:image'] && url['image:image'][0])
                     .map(url => ({
                         loc: url.loc[0],
@@ -37,7 +37,7 @@ exports.readXMLUrl = async (req, res) => {
                 // Send response
                 res.json({
                     success: true,
-                    productLinks,
+                    products,
                     message: "Successfully retrieved product links"
                 });
             }
