@@ -4,6 +4,9 @@ import { PRODUCT_URL } from "../services/api";
 import ProductCard from "./ProductCard";
 // icons
 import { RiDownloadCloud2Fill } from "react-icons/ri";
+import companyIcon from '../assets/images/product.gif'
+import Img from "./Img";
+
 
 // get API url
 const {
@@ -65,8 +68,13 @@ const XMLProducts = () => {
 
 
     return (
-        <div className="w-full h-screen flex-center flex-col gap-10">
-            <div className="bg-orange-950 p-6 rounded-2xl">
+        <div className="w-full flex-center flex-col gap-10">
+            <div className="bg-orange-950 flex items-center gap-5 p-6 rounded-2xl">
+                <img
+                    src={companyIcon}
+                    alt={'Company Icon'}
+                    className="w-14 "
+                />
                 <h1 className="text-5xl text-center font-bold text-orange-500 underline">
                     Shopify Product Scraper
                 </h1>
