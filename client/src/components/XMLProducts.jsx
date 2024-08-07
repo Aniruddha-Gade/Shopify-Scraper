@@ -87,7 +87,7 @@ const XMLProducts = () => {
 
     // handle Example Click
     const handleExampleClick = (url) => {
-        console.log("handleExampleClick url = ,url")
+        console.log("handleExampleClick url = ", url)
         setSitemapUrl(url);
         fetchProducts(url);
     };
@@ -139,7 +139,7 @@ const XMLProducts = () => {
                             <li
                                 key={link.url + link.id}
                                 onClick={() => handleExampleClick(link.url)}
-                                className={`text-blue-500 duration-200 cursor-pointer ${link.url === sitemapUrl ?'text-orange-700' :'hover:text-orange-500'}`}
+                                className={`text-blue-500 duration-200 cursor-pointer ${link.url === sitemapUrl ? 'text-orange-700' : 'hover:text-orange-500'}`}
                             >
                                 <span>{ind + 1} . </span>
                                 {link.url}
