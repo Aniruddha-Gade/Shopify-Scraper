@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import { toast } from "sonner"
 import { PRODUCT_URL } from "../services/api";
 import ProductCard from "./ProductCard";
 // icons
@@ -35,6 +36,9 @@ const XMLProducts = () => {
                 if (response.data.success) {
                     setProducts(response.data.products);
                 }
+            }
+            else {
+                toast.error("Add XML Url")
             }
         } catch (error) {
             console.error('Error fetching products', error);
