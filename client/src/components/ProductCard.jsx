@@ -22,12 +22,12 @@ const ProductCard = ({ product }) => {
     return (
         <Dialog open={openLogoutModal} onOpenChange={setOpenLogoutModal}>
             <DialogTrigger>
-                <div className="flex flex-col justify-between max-w-sm
-               bg-slate-600 p-4 rounded-2xl h-[500px] overflow-hidden cursor-pointer box-shadow-1">
+                <div className="flex flex-col justify-between max-w-sm bg-slate-600 p-4 rounded-2xl h-[500px] overflow-hidden 
+                        cursor-pointer duration-300 hover:scale-105 box-shadow-1">
                     <Img
                         src={product?.image}
                         alt={product?.title}
-                        className="w-full h-[270px] object-cover rounded-2xl"
+                        className="w-full h-[270px] object-cover rounded-2xl "
                     />
 
                     <div className="py-4 text-left text-lg flex flex-col gap-2">
@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
                         </div>
                         <div className="font-semibold">
                             <span className="text-white/50 font-bold">Summary: </span>
-                            {product?.summary|| "Not found"} 
+                            {product?.summary || "Not found"}
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
             <DialogContent className="bg-[#181920] text-white flex flex-col justify-evenly w-full h-[500px] border-none ">
                 <DialogHeader className="flex gap-5">
                     <DialogTitle>{product?.title}</DialogTitle>
-                    <DialogDescription className='flex gap-5'>
+                    <DialogDescription className='flex flex-col md:flex-row gap-5'>
                         <div>
                             <Img
                                 src={product?.image}
